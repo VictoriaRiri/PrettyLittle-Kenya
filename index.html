@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pretty Little Sparkles | Statement & Minimalist Jewellery Kenya</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #FAF6F0;
+            --bg-dark: #2C1F1A;
+            --accent-rose: #D4A5A5;
+            --accent-gold: #B8963E;
+            --text-main: #2C1F1A;
+            --text-light: #7A6F6A;
+            --font-display: 'Cormorant Garamond', serif;
+            --font-sans: 'Jost', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none !important; /* Force custom cursor */
+        }
+
+        html, body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            font-weight: 300;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* --- Custom Cursor --- */
+        #custom-cursor {
+            width: 28px;
+            height: 28px;
+            background: radial-gradient(circle, var(--accent-rose) 0%, rgba(212,165,165,0.2) 100%);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: multiply;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s;
+        }
+
+        .petal-particle {
+            position: absolute;
+            pointer-events: none;
+            z-index: 9998;
+            fill: var(--accent-rose);
+            opacity: 0.8;
+            transform-origin: center;
+        }
+
+        /* --- Loading Screen --- */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--bg-dark);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        #loader-logo {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: 2.5rem;
+            color: var(--bg-primary);
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
+        }
+
+        #loader-logo span {
+            opacity: 0;
+            display: inline-block;
+            transform: translateY(10px);
+            animation: fadeInLetter 1.5s forwards;
+        }
+
+        #loader-bar {
+            width: 0;
+            height: 1px;
+            background-color: var(--accent-gold);
+            transition: width 2.5s linear;
+        }
+
+        @keyframes fadeInLetter {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(250, 246, 240, 0.95);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 4rem;
+            z-index: 900;
+            border-bottom: 1px solid rgba(44, 31, 26, 0.05);
+        }
+
+        .nav-logo {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: 1.8rem;
+            text-decoration: none;
+            color: var(--text-main);
+            user-select: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            position: relative;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .nav-underline {
+            position: absolute;
+            bottom: 0;
+            height: 1px;
+            background-color: var(--accent-gold);
+            transition: all 0.3s ease;
+            width: 0;
+            left: 0;
+        }
+
+        .whatsapp-btn {
+            background-color: var(--bg-dark);
+            color: var(--bg-primary);
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            border: 1px solid var(--bg-dark);
+        }
+
+        .whatsapp-btn:hover {
+            background-color: transparent;
+            color: var(--text-main);
+        }
+
+        /* --- Sections Shared --- */
+        section {
+            padding: 8rem 4rem 4rem 4rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h2.section-title {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-weight: 300;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        /* --- Hero Section --- */
+        #hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 4rem;
+            padding-top: 6rem;
+        }
+
+        .hero-text {
+            padding-right: 2rem;
+        }
+
+        .hero-text h1 {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: 4.5rem;
+            line-height: 1.1;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        .hero-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            height: 70vh;
+        }
+
+        .hero-img-card {
+            background-color: #EFEBE4;
+            background-size: cover;
+            background-position: center;
+            border-radius: 4px;
+        }
+
+        .hero-img-card:nth-child(1) { transform: translateY(20px); background-image: url('https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=600&q=80'); }
+        .hero-img-card:nth-child(2) { transform: translateY(-20px); background-image: url('https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=600&q=80'); }
+
+        /* --- Shop Section --- */
+        .filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+            background: none;
+            border: none;
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.5rem 1rem;
+            color: var(--text-light);
+            transition: color 0.3s;
+        }
+
+        .filter-btn.active {
+            color: var(--accent-gold);
+            border-bottom: 1px solid var(--accent-gold);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+
+        .product-card {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .product-image-wrapper {
+            background-color: #EFEBE4;
+            aspect-ratio: 1;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .product-card:hover .product-img {
+            transform: scale(1.03);
+        }
+
+        .badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background-color: var(--bg-primary);
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid rgba(44, 31, 26, 0.1);
+            z-index: 10;
+        }
+
+        .product-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-title {
+            font-size: 1.05rem;
+            font-weight: 300;
+        }
+
+        .product-price {
+            font-family: var(--font-sans);
+            font-weight: 400;
+            color: var(--accent-gold);
+        }
+
+        .product-desc {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+
+        .buy-now-btn {
+            background: none;
+            border: 1px solid var(--text-main);
+            padding: 0.6rem;
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-main);
+            margin-top: auto;
+        }
+
+        .buy-now-btn:hover {
+            background-color: var(--bg-dark);
+            color: var(--bg-primary);
+        }
+
+        /* --- Collections Section --- */
+        .collections-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            height: 70vh;
+        }
+
+        .collection-card {
+            position: relative;
+            background-color: #EFEBE4;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .collection-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(44, 31, 26, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.4s;
+        }
+
+        .collection-card:hover .collection-overlay {
+            background-color: rgba(44, 31, 26, 0.4);
+        }
+
+        .collection-title {
+            font-family: var(--font-display);
+            font-style: italic;
+            color: var(--bg-primary);
+            font-size: 2.5rem;
+        }
+
+        /* --- About Section --- */
+        #about {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 6rem;
+        }
+
+        .about-img {
+            background-color: #EFEBE4;
+            aspect-ratio: 0.85;
+            border-radius: 4px;
+            background-image: url('https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .about-text h2 {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .about-text p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        /* --- Reviews Section --- */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .review-card {
+            background-color: #FDFBF7;
+            padding: 2.5rem;
+            border-radius: 4px;
+            border: 1px solid rgba(44, 31, 26, 0.03);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .review-text {
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: var(--text-main);
+        }
+
+        .review-author {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-gold);
+        }
+
+        /* --- Contact / CTA Section --- */
+        #contact {
+            background-color: var(--bg-dark);
+            color: var(--bg-primary);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            min-height: auto;
+            padding: 6rem 4rem;
+        }
+
+        .contact-left h2 {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-left p {
+            color: #A39690;
+            margin-bottom: 2.5rem;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-item h4 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-gold);
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-item p {
+            margin: 0;
+            color: var(--bg-primary);
+        }
+
+        .map-wrapper {
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            background-color: #3D2F29;
+            border-radius: 4px;
+            overflow: hidden;
+            filter: grayscale(80%) sepia(20%);
+        }
+
+        /* --- Inline Floating CMS Panel --- */
+        #cms-panel {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 450px;
+            height: 500px;
+            background: white;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            z-index: 99999;
+            border-radius: 8px;
+            display: none;
+            flex-direction: column;
+            border: 1px solid #E2E8F0;
+            color: #1A202C;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        .cms-header {
+            padding: 1rem;
+            background: #EDF2F7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .cms-header h3 { font-size: 0.95rem; font-weight: 600; cursor: default !important; }
+        .cms-header span { cursor: pointer !important; font-weight: bold; font-size: 1.2rem; }
+
+        .cms-tabs {
+            display: flex;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .cms-tab {
+            flex: 1;
+            padding: 0.75rem;
+            text-align: center;
+            background: #F7FAFC;
+            border: none;
+            cursor: pointer !important;
+            font-size: 0.85rem;
+        }
+
+        .cms-tab.active {
+            background: white;
+            font-weight: bold;
+            border-bottom: 2px solid var(--accent-gold);
+        }
+
+        .cms-content {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .cms-pane { display: none; height: 100%; }
+        .cms-pane.active { display: flex; flex-direction: column; }
+
+        .cms-pane textarea {
+            width: 100%;
+            height: 100%;
+            font-family: monospace;
+            font-size: 0.8rem;
+            padding: 0.5rem;
+            border: 1px solid #CBD5E0;
+            border-radius: 4px;
+            resize: none;
+            cursor: text !important;
+        }
+
+        .cms-pane input, .cms-pane select {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #CBD5E0;
+            border-radius: 4px;
+            cursor: pointer !important;
+        }
+
+        .cms-pane input[type="text"] { cursor: text !important; }
+
+        .cms-save-btn {
+            margin-top: 1rem;
+            background: var(--bg-dark);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 4px;
+            cursor: pointer !important;
+            font-weight: bold;
+            transition: opacity 0.2s;
+        }
+
+        .cms-save-btn:hover { opacity: 0.9; }
+
+        /* --- Responsive States --- */
+        @media(max-width: 968px) {
+            * { cursor: auto !important; }
+            #custom-cursor { display: none; }
+            nav { padding: 1.5rem 2rem; }
+            .nav-links { display: none; }
+            section { padding: 6rem 2rem 2rem 2rem; }
+            #hero, #about, #contact { grid-template-columns: 1fr; gap: 3rem; }
+            .hero-images { height: 40vh; }
+            .product-grid, .reviews-grid, .collections-grid { grid-template-columns: 1fr; }
+            .collections-grid { height: auto; }
+            .collection-card { height: 250px; }
+            #cms-panel { width: 90%; right: 5%; left: 5%; bottom: 5%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor Canvas -->
+    <div id="custom-cursor"></div>
+
+    <!-- Screen Opener/Loader -->
+    <div id="loader">
+        <div id="loader-logo">
+            <span>P</span><span>r</span><span>e</span><span>t</span><span>t</span><span>y</span><span>&nbsp;</span><span>L</span><span>i</span><span>t</span><span>t</span><span>l</span><span>e</span><span>&nbsp;</span><span>S</span><span>p</span><span>a</span><span>r</span><span>k</span><span>l</span><span>e</span><span>s</span>
+        </div>
+        <div style="width: 150px; background: rgba(255,255,255,0.1); height: 1px;">
+            <div id="loader-bar"></div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="#" class="nav-logo" id="brand-logo" title="Long press for 5s to unlock CMS">Pretty Little Sparkles</a>
+        <ul class="nav-links">
+            <li><a href="#hero" class="nav-item">Home</a></li>
+            <li><a href="#shop" class="nav-item">Shop</a></li>
+            <li><a href="#collections" class="nav-item">Collections</a></li>
+            <li><a href="#about" class="nav-item">About</a></li>
+            <li><a href="#reviews" class="nav-item">Reviews</a></li>
+            <li><a href="#contact" class="nav-item">Contact</a></li>
+            <div class="nav-underline"></div>
+        </ul>
+        <a href="https://wa.me/254719678791" target="_blank" class="whatsapp-btn">WhatsApp Order</a>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero">
+            <div class="hero-text">
+                <h1>Statement Earrings From Kshs 400</h1>
+                <p>Modern, classy, minimalist jewellery curated meticulously for the timeless individual. Handpicked designs based in Nairobi with reliable countrywide delivery.</p>
+                <a href="#shop" class="buy-now-btn" style="padding: 1rem 2rem; display: inline-block;">Shop New Arrivals</a>
+            </div>
+            <div class="hero-images">
+                <div class="hero-img-card"></div>
+                <div class="hero-img-card"></div>
+            </div>
+        </section>
+
+        <!-- Shop Section -->
+        <section id="shop">
+            <h2 class="section-title">The Collection</h2>
+            <div class="filter-bar">
+                <button class="filter-btn active" onclick="filterProducts('all', this)">All</button>
+                <button class="filter-btn" onclick="filterProducts('Earrings', this)">Earrings</button>
+                <button class="filter-btn" onclick="filterProducts('Hypoallergenic', this)">Hypoallergenic</button>
+                <button class="filter-btn" onclick="filterProducts('Best Seller', this)">Best Sellers</button>
+                <button class="filter-btn" onclick="filterProducts('Under 500', this)">Under 500</button>
+            </div>
+            <div class="product-grid" id="product-display">
+                <!-- Reactively Populated via Javascript -->
+            </div>
+        </section>
+
+        <!-- Collections Hub -->
+        <section id="collections">
+            <h2 class="section-title">Curated Collections</h2>
+            <div class="collections-grid">
+                <div class="collection-card" style="background: url('https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=600&q=80') center/cover;">
+                    <div class="collection-overlay"><div class="collection-title">Statement</div></div>
+                </div>
+                <div class="collection-card" style="background: url('https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=600&q=80') center/cover;">
+                    <div class="collection-overlay"><div class="collection-title">Minimalist</div></div>
+                </div>
+                <div class="collection-card" style="background: url('https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=600&q=80') center/cover;">
+                    <div class="collection-overlay"><div class="collection-title">Hypoallergenic</div></div>
+                </div>
+                <div class="collection-card" style="background: url('https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=600&q=80') center/cover;">
+                    <div class="collection-overlay"><div class="collection-title">Gifts</div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Brand Story Section -->
+        <section id="about">
+            <div class="about-img"></div>
+            <div class="about-text">
+                <h2>Our Ethos</h2>
+                <p>Pretty Little Sparkles 1 Kenya was founded to provide trendy, modern, and high-quality accessories that elevate your daily look without breaking the bank.</p>
+                <p>Our pieces are carefully selected focusing on hypoallergenic materials, minimalist aesthetics, and bold statement designs that make perfect gifts for yourself or a loved one. From our hub in Revlon Professional Plaza, we ensure your sparkle reaches you anywhere in the country.</p>
+            </div>
+        </section>
+
+        <!-- Reviews -->
+        <section id="reviews">
+            <h2 class="section-title">Happy Clients</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <p class="review-text">"Happy client in our statement earrings! They completely elevated my outfit and I didn't feel them all day."</p>
+                    <span class="review-author">— Verified Client</span>
+                </div>
+                <div class="review-card">
+                    <p class="review-text">"Finding beautiful hypoallergenic studs that don't irritate my ears has been impossible until now. Obsessed!"</p>
+                    <span class="review-author">— Amara O.</span>
+                </div>
+                <div class="review-card">
+                    <p class="review-text">"Incredibly fast delivery across Kenya. Packed beautifully, it felt like opening a luxury gift. The dainty ring fits perfectly."</p>
+                    <span class="review-author">— Delilah M.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Contact -->
+        <section id="contact">
+            <div class="contact-left">
+                <h2>Visit or Inquire</h2>
+                <p>Ready to add to your collection? Reach out instantly for countrywide deliveries or drop by our shop in Nairobi.</p>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <h4>Location</h4>
+                        <p>Revlon Professional Plaza, Kimathi Street, 4th Floor, Shop 6, Nairobi, Kenya</p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>WhatsApp / Orders</h4>
+                        <p>+254 719 678791</p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>Pricing</h4>
+                        <p>Kshs 400 - Kshs 500 standard range</p>
+                    </div>
+                </div>
+            </div>
+            <div class="map-wrapper">
+                <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q=-1.283333,36.816667&hl=en&z=16&amp;output=embed"></iframe>
+            </div>
+        </section>
+    </main>
+
+    <!-- Floating Live CMS System Panel -->
+    <div id="cms-panel">
+        <div class="cms-header">
+            <h3>🔒 PLS Engine Inline CMS</h3>
+            <span onclick="toggleCMS(false)">&times;</span>
+        </div>
+        <div class="cms-tabs">
+            <button class="cms-tab active" onclick="switchTab('json-tab', this)">JSON Data</button>
+            <button class="cms-tab" onclick="switchTab('cloudinary-tab', this)">Media Linker</button>
+        </div>
+        <div class="cms-content">
+            <div id="json-tab" class="cms-pane active">
+                <p style="font-size:0.75rem; color:#718096; margin-bottom:0.5rem">Edit the products.json client-side database:</p>
+                <textarea id="json-editor-area"></textarea>
+                <button class="cms-save-btn" onclick="saveCMSJson()">Push Updates Live</button>
+            </div>
+            <div id="cloudinary-tab" class="cms-pane">
+                <label style="font-size:0.8rem; font-weight:600;">Target Product ID:</label>
+                <select id="cloudinary-pid-select"></select>
+                <label style="font-size:0.8rem; font-weight:600; margin-top:1rem;">Cloudinary URL:</label>
+                <input type="text" id="cloudinary-url-input" placeholder="https://res.cloudinary.com/.../image.jpg">
+                <button class="cms-save-btn" onclick="saveCMSCloudinary()">Map Media</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data Store Interface Mocking standard products.json
+        let productsData = [
+            { id: "PLS-001", name: "Statement Drop Earrings", price: 500, desc: "Cute statement earrings meant to elevate your daily look.", tag: "Best Seller", category: "Earrings", img: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=500&q=80" },
+            { id: "PLS-002", name: "Minimalist Earrings", price: 500, desc: "Minimalist earrings available. Perfect for everyday wear.", tag: "New Arrival", category: "Earrings", img: "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=500&q=80" },
+            { id: "PLS-003", name: "Knot Statement Earrings", price: 400, desc: "Knot statement earrings with an elegant gold finish.", tag: "Under 500", category: "Earrings", img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=500&q=80" },
+            { id: "PLS-004", name: "Heart Stud Hypoallergenic", price: 500, desc: "Heart stud hypoallergenic composition safe for all sensitivities.", tag: "Hypoallergenic", category: "Earrings", img: "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=500&q=80" },
+            { id: "PLS-005", name: "Dainty Adjustable Ring", price: 500, desc: "Dainty, adjustable ring. Hypoallergenic. Few pieces available.", tag: "Hypoallergenic", category: "Rings", img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=500&q=80" },
+            { id: "PLS-006", name: "Studs and Hoops Set", price: 500, desc: "Studs and hoops perfect for stacking and multiple piercings.", tag: "Under 500", category: "Earrings", img: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=500&q=80" },
+            { id: "PLS-007", name: "Flat Back Studs", price: 450, desc: "Flat back studs. Few pairs available for a comfortable sleep-in style.", tag: "Under 500", category: "Earrings", img: "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=500&q=80" },
+            { id: "PLS-008", name: "Mother's Day Gift", price: 500, desc: "Looking for a beautiful Mother's Day piece? We have you covered.", tag: "Seasonal", category: "Gifts", img: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=500&q=80" },
+            { id: "PLS-009", name: "Floral Drop Earrings", price: 500, desc: "Happy client in our signature beautiful statement setup.", tag: "Best Seller", category: "Earrings", img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=500&q=80" }
+        ];
+
+        // Custom Cursor Movement
+        const cursor = document.getElementById('custom-cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        
+        document.addEventListener('mousedown', () => cursor.style.transform = 'translate(-50%, -50%) scale(0.8)');
+        document.addEventListener('mouseup', () => cursor.style.transform = 'translate(-50%, -50%) scale(1)');
+
+        // Click Burst Petals Realization Engine
+        document.addEventListener('click', (e) => {
+            if(e.target.closest('#cms-panel') || e.target.closest('a') || e.target.closest('button')) return;
+            
+            const count = 4 + Math.floor(Math.random() * 4);
+            for(let i=0; i<count; i++) {
+                createPetalParticle(e.clientX, e.clientY);
+            }
+        });
+
+        function createPetalParticle(x, y) {
+            const petal = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            petal.setAttribute("class", "petal-particle");
+            petal.setAttribute("viewBox", "0 0 20 20");
+            
+            const size = 8 + Math.random() * 6;
+            petal.style.width = `${size}px`;
+            petal.style.height = `${size}px`;
+            
+            // Account for scroll position
+            const scrollX = window.scrollX || window.pageXOffset;
+            const scrollY = window.scrollY || window.pageYOffset;
+            petal.style.left = `${x + scrollX - size/2}px`;
+            petal.style.top = `${y + scrollY - size/2}px`;
+
+            const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            path.setAttribute("d", "M10,0 C15,5 20,12 10,20 C0,12 5,5 10,0 Z");
+            petal.appendChild(path);
+            
+            document.body.appendChild(petal);
+
+            const angle = Math.random() * Math.PI * 2;
+            const velocity = 20 + Math.random() * 40;
+            const destinationX = Math.cos(angle) * velocity;
+            const destinationY = Math.sin(angle) * velocity;
+            const rotation = Math.random() * 360;
+
+            const anim = petal.animate([
+                { transform: 'translate(0, 0) rotate(0deg) scale(1)', opacity: 0.8 },
+                { transform: `translate(${destinationX}px, ${destinationY}px) rotate(${rotation}deg) scale(0.3)`, opacity: 0 }
+            ], {
+                duration: 800,
+                easing: 'cubic-bezier(0.25, 1, 0.5, 1)'
+            });
+
+            anim.onfinish = () => petal.remove();
+        }
+
+        // Loading Screen Timings
+        window.addEventListener('DOMContentLoaded', () => {
+            const loaderBar = document.getElementById('loader-bar');
+            loaderBar.style.width = '100%';
+            
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 800);
+            }, 2500);
+
+            renderProducts(productsData);
+            setupCMS();
+        });
+
+        // Navigation Highlight Slider System
+        const sections = document.querySelectorAll('section');
+        const navItems = document.querySelectorAll('.nav-item');
+        const underline = document.querySelector('.nav-underline');
+
+        function updateNavUnderline() {
+            let currentActive = null;
+            sections.forEach(sec => {
+                const top = sec.offsetTop - 120;
+                const bottom = top + sec.offsetHeight;
+                const scroll = window.scrollY;
+                if(scroll >= top && scroll < bottom) {
+                    currentActive = sec.getAttribute('id');
+                }
+            });
+
+            if(currentActive) {
+                navItems.forEach(item => {
+                    if(item.getAttribute('href') === `#${currentActive}`) {
+                        const bounds = item.getBoundingClientRect();
+                        const navBounds = item.closest('ul').getBoundingClientRect();
+                        underline.style.width = `${bounds.width}px`;
+                        underline.style.left = `${bounds.left - navBounds.left}px`;
+                    }
+                });
+            }
+        }
+        window.addEventListener('scroll', updateNavUnderline);
+        window.addEventListener('resize', updateNavUnderline);
+
+        // Product Template Generator 
+        function renderProducts(data) {
+            const container = document.getElementById('product-display');
+            container.innerHTML = '';
+            
+            data.forEach(p => {
+                const waMessage = encodeURIComponent(`Hi Pretty Little Sparkles, I would like to order ${p.name} (${p.id}) priced at Kshs ${p.price}.`);
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-image-wrapper">
+                        <img class="product-img" src="${p.img}" alt="${p.name} Kenya">
+                        <div class="badge">${p.tag ? p.tag : 'Few Available'}</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${p.name}</h3>
+                        <span class="product-price">Kshs ${p.price}</span>
+                    </div>
+                    <p class="product-desc">${p.desc}</p>
+                    <a href="https://wa.me/254719678791?text=${waMessage}" target="_blank" class="buy-now-btn">Claim via WhatsApp</a>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Filtration Processing Engine
+        function filterProducts(filterType, buttonElement) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            buttonElement.classList.add('active');
+
+            if(filterType === 'all') {
+                renderProducts(productsData);
+            } else if (filterType === 'Under 500') {
+                const filtered = productsData.filter(p => p.price <= 500 && p.price > 0 && p.tag === 'Under 500');
+                renderProducts(filtered.length ? filtered : productsData.filter(p => p.price <= 500));
+            } else {
+                const filtered = productsData.filter(p => p.tag === filterType || p.category === filterType);
+                renderProducts(filtered);
+            }
+        }
+
+        // --- Hidden CMS Core Engine System ---
+        let logoPressTimer;
+        const brandLogo = document.getElementById('brand-logo');
+
+        brandLogo.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            logoPressTimer = setTimeout(() => toggleCMS(true), 5000);
+        });
+
+        brandLogo.addEventListener('mouseup', () => clearTimeout(logoPressTimer));
+        brandLogo.addEventListener('mouseleave', () => clearTimeout(logoPressTimer));
+        
+        // Touch supports
+        brandLogo.addEventListener('touchstart', (e) => {
+            logoPressTimer = setTimeout(() => toggleCMS(true), 5000);
+        });
+        brandLogo.addEventListener('touchend', () => clearTimeout(logoPressTimer));
+
+        function toggleCMS(show) {
+            const panel = document.getElementById('cms-panel');
+            panel.style.display = show ? 'flex' : 'none';
+            if(show) {
+                document.getElementById('json-editor-area').value = JSON.stringify(productsData, null, 2);
+                populateCloudinarySelectors();
+                
+                // Allow cursor in CMS
+                document.body.style.cursor = 'auto';
+                cursor.style.display = 'none';
+            } else {
+                document.body.style.cursor = 'none';
+                cursor.style.display = 'block';
+            }
+        }
+
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.cms-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.cms-pane').forEach(p => p.classList.remove('active'));
+            
+            btn.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function setupCMS() {
+            document.getElementById('json-editor-area').value = JSON.stringify(productsData, null, 2);
+        }
+
+        function populateCloudinarySelectors() {
+            const sel = document.getElementById('cloudinary-pid-select');
+            sel.innerHTML = '';
+            productsData.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p.id;
+                opt.textContent = `${p.id} - ${p.name}`;
+                sel.appendChild(opt);
+            });
+        }
+
+        function saveCMSJson() {
+            try {
+                const raw = document.getElementById('json-editor-area').value;
+                const parsed = JSON.parse(raw);
+                productsData = parsed;
+                renderProducts(productsData);
+                populateCloudinarySelectors();
+                alert('Success: Engine JSON Live Database updated dynamically.');
+            } catch(err) {
+                alert('Invalid JSON Schema Structure: ' + err.message);
+            }
+        }
+
+        function saveCMSCloudinary() {
+            const targetId = document.getElementById('cloudinary-pid-select').value;
+            const newUrl = document.getElementById('cloudinary-url-input').value;
+            
+            if(!newUrl) return alert('Provide a valid asset URL.');
+            
+            const product = productsData.find(p => p.id === targetId);
+            if(product) {
+                product.img = newUrl;
+                renderProducts(productsData);
+                document.getElementById('json-editor-area').value = JSON.stringify(productsData, null, 2);
+                document.getElementById('cloudinary-url-input').value = '';
+                alert(`Asset mapped directly to node: ${targetId}`);
+            }
+        }
+    </script>
+</body>
+</html>
